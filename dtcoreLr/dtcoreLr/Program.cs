@@ -7,7 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
+
+//Services configuaration
+builder.Services.AddRazorPages();
+
+
 var app = builder.Build();
+
+
+// Services activation
+if (app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
@@ -16,6 +29,12 @@ var app = builder.Build();
 //    app.UseSwaggerUI();
 //}
 
-app.MapGet("/", () => "Hello World!");
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+app.MapRazorPages();
+
+//app.MapGet("/", () => "Hello World!");
 
 app.Run();
